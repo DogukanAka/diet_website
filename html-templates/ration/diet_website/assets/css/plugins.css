@@ -12200,3 +12200,17 @@ img.mfp-img {
 .slick-arrow.slick-hidden {
     display: none;
 }
+.image-container {
+    position: relative; /* Konteyneri göreceli konuma ayarla */
+    height: 900px; /* Konteynerin yüksekliği */
+    /*text-align: center; /* Görüntüyü yatayda merkezlemek için */
+}
+
+.image-container img {
+    position: absolute; /* Görüntüyü mutlak konuma ayarla */
+    top: 50%; /* Görüntünün üst kenarını kutunun ortasına hizala */
+    left: 50%; /* Görüntünün sol kenarını kutunun ortasına hizala */
+    transform: translate(-50%, -50%); /* Görüntüyü dikeyde ve yatayda ortalamak için */
+    max-width: 100%; /* Görüntüyü konteynerin genişliğine sığdır */
+    max-height: 100%; /* Görüntüyü konteynerin yüksekliğine sığdır */
+}
