@@ -809,9 +809,15 @@ a img.aligncenter {
     color: #90c438;
 }
 .main-menu > ul > li.menu-item-has-children > a:after {
-    content: "\f0d7";
+    content: "";
+    display: inline-block;
+    width: 16px; /* Genişlik artırıldı */
+    height: 16px; /* Yükseklik artırıldı */
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>');
+    background-size: contain;
     margin-left: 4px;
-    font-family: "Fontawesome";
+    vertical-align: middle;
+
 }
 .main-menu > ul > li.menu-item-has-children > ul.sub-menu {
     position: absolute;
