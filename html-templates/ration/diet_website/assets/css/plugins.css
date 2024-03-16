@@ -6631,7 +6631,9 @@ tbody.collapse.show {
     padding-bottom: 0.3125rem;
     margin-right: 1rem;
     font-size: 1.25rem;
-    line-height: inherit;
+    /*line-height: inherit;
+    line-height: normal; /* Kalıtılan değeri iptal etmek için */
+    height: 80px; /* Öğenin istediğiniz yüksekliğini belirleyin */
     white-space: nowrap;
 }
 .navbar-brand:focus,
