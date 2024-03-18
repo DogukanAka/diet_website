@@ -44,6 +44,18 @@ app.get('/sucess-stores.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'sucess-stores.html'));
 });
 
+// giriş sayfası için route
+app.get('/login.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'login.html'));
+});
+
+// kayıt ol sayfası için route
+app.get('/signup.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'signup.html'));
+});
+
+
+
 // Eğer endpoint belirtilmemişse index.html'i gönder
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'index.html'));
