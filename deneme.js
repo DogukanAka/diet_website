@@ -97,12 +97,7 @@ app.post('/signup', async (req, res) => {
 });
 
 // Giriş yapma işlemi
-// Giriş yapma işlemi
-// Giriş yapma işlemi
-// Giriş yapma işlemi
-// Giriş yapma işlemi
-// Giriş yapma işlemi
-// Giriş yapma işlemi
+
 app.post('/login', async (req, res) => {
     const { email, password } = req.body;
     const result = await client.query('SELECT * FROM users WHERE email = $1', [email]);
