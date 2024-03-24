@@ -39,24 +39,24 @@
                     <div class="main-info">
                         <div class="hero-container">
                             <!-- Signup form -->
-							<form class="signup-form" method="post">
+							<form class="signup-form" action="/signup" method="POST">
 							    <div class="imgcontainer">
 									<img src="assets/images/logo.png" alt="logo" class="avatar">
 								</div>
 							    <div class="input-control">
 							    	<div class="row p-l-5 p-r-5">
 									    <div class="col-md-6 p-l-10 p-r-10">
-											<input type="text" placeholder="Kullanıcı Adı " name="uname" required>
+											<input type="text" placeholder="Kullanıcı Adı " name="name" required>
 										</div>
 										<div class="col-md-6 p-l-10 p-r-10">
 											<input type="email" placeholder="Mail Adresi" name="email" required>
 										</div>
 										<div class="col-md-6 p-l-10 p-r-10">
-											<input type="password" placeholder="Şifre" name="psw" class="input-checkmark" required>
+											<input type="password" placeholder="Şifre" name="password" class="input-checkmark" required>
 										</div>
 										<div class="col-md-6 p-l-10 p-r-10">
 											<span class="password-field-show">
-												<input class="password-field input-checkmark" type="password" placeholder="Şifrenizi tekrar girin" name="psw" required>
+												<input class="password-field input-checkmark" type="password" placeholder="Şifrenizi tekrar girin" name="password_confirmation" required>
 												<span data-toggle=".password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
 											</span>
 										</div>

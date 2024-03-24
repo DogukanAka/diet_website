@@ -39,29 +39,28 @@
                     <div class="main-info">
                         <div class="hero-container">
                             <!-- Login form -->
-                            <form class="login-form" method="post">
+                            <form class="login-form" action="/login" method="POST">
                                 <div class="imgcontainer">
                                     <img src="assets/images/logo.png" alt="Avatar" class="avatar">
                                 </div>
                                 <div class="input-control">
-                                    <input type="text" placeholder="Kullanıcı Adı" name="uname" required>
+                                    <input type="text" name="email" placeholder="Email" required>
                                     <span class="password-field-show">
                                         <input type="password" placeholder="Şifre" name="password"
                                             class="password-field" value="" required>
                                         <span data-toggle=".password-field"
                                             class="fa fa-fw fa-eye field-icon toggle-password"></span>
                                     </span>
-                                    <label class="label-container">Beni hatırla
+                                    <label class="label-container">Beni Hatırla
                                         <input type="checkbox">
                                         <span class="checkmark"></span>
                                     </label>
-                                    <span class="psw"><a href="forgot.html" class="forgot-btn">Şifremi unuttum?
-                                             </a></span>
+                                    <span class="psw"><a href="forgot.html" class="forgot-btn">Şifremi Unuttum?</a></span>
                                     <div class="login-btns">
                                         <button type="submit">Giriş Yap</button>
                                     </div>
                                     <div class="division-lines">
-                                        <p>şunlarla bağlanın</p>
+                                        <p>Bunlarla Giriş Yap</p>
                                     </div>
                                     <div class="login-with-btns">
                                         <button type="button" class="google"><i class="fab fa-google"></i></button>
@@ -70,8 +69,8 @@
                                         <button type="button" class="twitter"><i class="fab fa-twitter"></i></button>
                                         <button type="button" class="linkedin"><i
                                                 class="fab fa-linkedin-in"></i></button>
-                                        <span class="already-acc">Üye değil misiniz? <a href="signup.html"
-                                                class="signup-btn">Kayıt ol</a></span>
+                                        <span class="already-acc">Üye Değil Misiniz? <a href="signup.html"
+                                                class="signup-btn">Kayıt Olun</a></span>
                                     </div>
                                 </div>
                             </form>
