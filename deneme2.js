@@ -4,9 +4,6 @@ const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
 const { Client } = require('pg');
 const jwt = require('jsonwebtoken');
-const cookieParser = require('cookie-parser');
-
-
 
 const app = express();
 const port = 3000;
@@ -23,13 +20,11 @@ client.connect();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(cookieParser());
 
 // Ana sayfa için route
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'index.html'));
 });
-
 
 // İletişim sayfası için route
 app.get('/contact.html', (req, res) => {
@@ -71,13 +66,10 @@ app.get('/signup.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'signup.html'));
 });
 
-
-
 // Eğer endpoint belirtilmemişse index.html'i gönder
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'index.html'));
 });
-
 
 // Kayıt olma işlemi
 app.post('/signup', async (req, res) => {
@@ -102,11 +94,6 @@ app.post('/signup', async (req, res) => {
 });
 
 // Giriş yapma işlemi
-
-
-
-
-// Giriş yapma işlemi
 app.post('/login', async (req, res) => {
     const { email, password } = req.body;
     const result = await client.query('SELECT * FROM users WHERE email = $1', [email]);
@@ -114,8 +101,20 @@ app.post('/login', async (req, res) => {
         const user = result.rows[0];
         const validPassword = await bcrypt.compare(password, user.password);
         if (validPassword) {
-            // Giriş başarılı
-            // Pop-up mesajı göster ve ana sayfaya yönlendir
+            // Giriş başarılı, access token oluştur
+            const accessToken = jwt.sign({ email: user.email }, 'secret_key', { expiresIn: '3h' });
+
+            // Access token'i local storage'a sakla
+            // Örneğin, bir cookie olarak saklayabilirsiniz
+            res.cookie('access_token', accessToken, { httpOnly: false, maxAge: 10800000 });
+
+
+            // Kullanıcı verilerini local_storage_data tablosuna ekleyin
+            const insertUserQuery = 'INSERT INTO local_storage_data (user_id, name, email, password, access_token) VALUES ($1, $2, $3, $4, $5)';
+            await client.query(insertUserQuery, [user.id, user.name, user.email, user.password, accessToken]);
+
+
+
             res.send('<script>alert("Login successful"); window.location.href = "/";</script>');
         } else {
             // Hatalı şifre girişi
@@ -127,41 +126,6 @@ app.post('/login', async (req, res) => {
     }
 });
 
-app.get('/api/user-info', async (req, res) => {
-    const accessToken = req.cookies['access_token']; // Cookie'den access token al
-
-    if (!accessToken) {
-        return res.status(401).json({ error: 'Erişim reddedildi.' });
-    }
-
-    try {
-        jwt.verify(accessToken, 'secret_key'); // Token doğrulama
-        const userInfo = await client.query('SELECT name FROM local_storage_data WHERE access_token = $1', [accessToken]);
-
-        if (userInfo.rows.length > 0) {
-            return res.json({ name: userInfo.rows[0].name });
-        } else {
-            return res.status(404).json({ error: 'Kullanıcı bilgisi bulunamadı.' });
-        }
-    } catch (err) {
-        return res.status(401).json({ error: 'Token geçersiz veya süresi dolmuş.' });
-    }
-});
-
-
-// ... Diğer route'lar ve sunucuyu başlatma işlemi
-app.listen(port, () => {
-    console.log(`Uygulama ${port} numaralı port üzerinde çalışıyor`);
-});
-
-// ...
-
-
-
-
-
-
-// Diğer sayfalar için route'lar eklenebilir
 
 // Sunucuyu başlatma
 app.listen(port, () => {

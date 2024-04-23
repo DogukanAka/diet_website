@@ -96,8 +96,14 @@ Header area start
                     <li><a href="contact.html">İletişim</a></li>
                     <li class="menu-item-has-children" ><a href="#"  >Değerlendirme Al!</a>
                         <ul class="sub-menu">
-                            <li><a href="login.html">Giriş Yap</a></li>
-                            <li><a href="signup.html">Üye Ol</a></li>
+
+                            <!-- Diğer menü öğeleri -->
+                            <li id="loginSection"><a href="login.html">Giriş Yap</a></li>
+                            <li id="signupSection"><a href="signup.html">Üye Ol</a></li>
+                            <li id="profileSection" style="display:none;"><a href="profile.html">Profilim</a></li>
+                            <li id="logoutSection" style="display:none;"><a href="#" onclick="logout()">Çıkış Yap</a></li>
+                            <!-- Diğer menü öğeleri -->
+
 
                         </ul>
 
@@ -555,6 +561,47 @@ Section start
     <!-- app js -->
     <script src="assets/js/app.js"></script>
 
+<!-- index.html içerisine script tag'ı olarak ekleyin -->
+
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Cookie'den token kontrolü için fonksiyon
+        function getCookie(name) {
+            let cookie = {};
+            document.cookie.split(';').forEach(function(el) {
+                let parts = el.split('=');
+                cookie[parts[0].trim()] = parts[1] && parts[1].trim();
+            });
+            return cookie[name];
+        }
+
+        // Giriş durumuna göre menü öğelerini göster/gizle
+        const userLoggedIn = getCookie('access_token') !== undefined;
+
+        if (userLoggedIn) {
+            document.getElementById('loginSection').style.display = 'none';
+            document.getElementById('signupSection').style.display = 'none';
+            document.getElementById('profileSection').style.display = 'block';
+            document.getElementById('logoutSection').style.display = 'block';
+        } else {
+            document.getElementById('loginSection').style.display = 'block';
+            document.getElementById('signupSection').style.display = 'block';
+            document.getElementById('profileSection').style.display = 'none';
+            document.getElementById('logoutSection').style.display = 'none';
+        }
+    });
+
+    function logout() {
+        // Çıkış işlemi için cookie temizleme ve sayfayı server'dan yeniden yükleme
+        document.cookie = "access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        window.location.reload(true); // Cache'den değil, server'dan yeniden yükle
+    }
+
+
+
+</script>
 
 
 </body>

@@ -6,7 +6,6 @@ const { Client } = require('pg');
 
 const app = express();
 const port = 3000;
-
 const client = new Client({
     user: "postgres",
     host: "localhost",
@@ -118,8 +117,27 @@ app.post('/login', async (req, res) => {
     }
 });
 
+app.get('/api/user-info', async (req, res) => {
+    const accessToken = req.cookies['access_token']; // Cookie'den access token al
 
+    if (!accessToken) {
+        return res.status(401).json({ error: 'Erişim reddedildi.' });
+    }
 
+    try {
+        jwt.verify(accessToken, 'secret_key'); // Token doğrulama
+        const userInfo = await client.query('SELECT name FROM local_storage_data WHERE access_token = $1', [accessToken]);
+
+        if (userInfo.rows.length > 0) {
+            return res.json({ name: userInfo.rows[0].name });
+        } else {
+            return res.status(404).json({ error: 'Kullanıcı bilgisi bulunamadı.' });
+        }
+    } catch (err) {
+        return res.status(401).json({ error: 'Token geçersiz veya süresi dolmuş.' });
+    }
+});
+// Bu fonksiyon, kullanıcı login durumunu kontrol eder ve UI'ı günceller.
 
 // Diğer sayfalar için route'lar eklenebilir
 
@@ -127,3 +145,4 @@ app.post('/login', async (req, res) => {
 app.listen(port, () => {
     console.log(`Uygulama ${port} numaralı port üzerinde çalışıyor`);
 });
+
