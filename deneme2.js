@@ -126,6 +126,36 @@ app.post('/login', async (req, res) => {
     }
 });
 
+// ... Önceki kodlarınız ...
+
+app.get('/logout', async (req, res) => {
+    // Cookie'den JWT token'ını al
+    const token = req.cookies['access_token'];
+    if (token) {
+        try {
+            // Token'ı doğrulayarak kullanıcının bilgilerini çıkar
+            const decoded = jwt.verify(token, 'secret_key');
+            // Kullanıcının çıkış zamanını veritabanında güncelle
+            await client.query('UPDATE users SET last_logout = NOW() WHERE email = $1', [decoded.email]);
+
+            // Kullanıcının cookie'sini silerek oturumu sonlandır
+            res.cookie('access_token', '', { expires: new Date(0) });
+
+            res.redirect('/login.html');
+        } catch (error) {
+            // Token doğrulama hatası veya başka bir sunucu hatası olabilir
+            console.error('Logout error:', error);
+            res.status(500).send('Internal Server Error');
+        }
+    } else {
+        // Kullanıcı zaten giriş yapmamış
+        res.redirect('/login.html');
+    }
+});
+
+// ... Diğer route'larınız ve sunucuyu başlatma kodu ...
+
+
 
 // Sunucuyu başlatma
 app.listen(port, () => {
